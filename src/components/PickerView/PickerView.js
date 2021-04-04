@@ -5,11 +5,11 @@ import Api from "../../Api/Api";
 import { WeatherInfo } from "../WeatherInfo/WeatherInfo";
 
 export function PickerView() {
-  const [data, setData] = useState({ name: "New York" });
-  const pickerValue = "New York";
+  const [pickerValue, setPickerValue] = useState('New York');
+  const [data, setData] = useState({});
   useEffect(() => {
-    Api.getData("New York").then((r) => setData(r));
-  }, []);
+    Api.getData(pickerValue).then((r) => setData(r));
+  }, [pickerValue]);
   return (
     <View style={styles.container}>
       <WeatherInfo data={data}></WeatherInfo>
@@ -17,7 +17,7 @@ export function PickerView() {
         style={styles.picker}
         selectedValue={pickerValue}
         onValueChange={(itemValue, itemIndex) => {
-          pickerValue = itemValue;
+          setPickerValue(itemValue);
           Api.getData(itemValue).then((r) => setData(r));
         }}
       >
